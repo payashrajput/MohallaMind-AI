@@ -27,7 +27,16 @@ const refreshSecret = process.env.REFRESH_TOKEN_PEPPER;
 if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is required. Use PostgreSQL and run npm run db:migrate.');
 if (prod && (!jwtSecret || jwtSecret.length < 32 || !refreshSecret || refreshSecret.length < 32)) throw new Error('Production requires JWT_SECRET and REFRESH_TOKEN_PEPPER of at least 32 characters each.');
 if (prod && allowedOrigins.length === 0) throw new Error('Production requires CORS_ORIGINS with the exact frontend origin(s).');
-const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: Number(process.env.DB_POOL_MAX || 10), idleTimeoutMillis: 30000, connectionTimeoutMillis: 5000, ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== 'false' } : undefined });
+const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: Number(process.env.DB_POOL_MAX || 10), idleTimeoutMillis: 30000, connectionTimeoutMillis: 5000, ssl: process.env.DATABASE_SSL === 'true'
+  ? {
+      ca: fs.readFileSync(
+        new URL('./certs/prod-ca-2021.crt', import.meta.url),
+        'utf8'
+      ),
+      rejectUnauthorized: true
+    }
+  : undefined,
+max: 3 });
 const azureConfigured = Boolean(process.env.AZURE_STORAGE_ACCOUNT_NAME && process.env.AZURE_STORAGE_ACCOUNT_KEY && process.env.AZURE_STORAGE_CONTAINER);
 const azureCredential = azureConfigured ? new StorageSharedKeyCredential(process.env.AZURE_STORAGE_ACCOUNT_NAME, process.env.AZURE_STORAGE_ACCOUNT_KEY) : null;
 const blobService = azureConfigured ? new BlobServiceClient(`https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`, azureCredential) : null;
