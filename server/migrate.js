@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import 'dotenv/config';
+import * as fs from 'node:fs/promises';
 const { Pool } = pg;
 if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is required. Configure PostgreSQL before running migrations.');
 const pool = new Pool({ connectionString: process.env.DATABASE_URL, ssl: process.env.DATABASE_SSL === 'true'
