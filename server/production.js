@@ -13,6 +13,7 @@ import sharp from 'sharp';
 import { BlobServiceClient, StorageSharedKeyCredential, BlobSASPermissions, generateBlobSASQueryParameters } from '@azure/storage-blob';
 import { z } from 'zod';
 import fs from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -29,7 +30,7 @@ if (prod && (!jwtSecret || jwtSecret.length < 32 || !refreshSecret || refreshSec
 if (prod && allowedOrigins.length === 0) throw new Error('Production requires CORS_ORIGINS with the exact frontend origin(s).');
 const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: Number(process.env.DB_POOL_MAX || 10), idleTimeoutMillis: 30000, connectionTimeoutMillis: 5000, ssl: process.env.DATABASE_SSL === 'true'
   ? {
-      ca: fs.readFileSync(
+      ca: readFileSync(
         new URL('./certs/prod-ca-2021.crt', import.meta.url),
         'utf8'
       ),
