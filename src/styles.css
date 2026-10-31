@@ -27,3 +27,21 @@
 .dark-mode table{color:#e0ebe4}.dark-mode th{background:#20352a;color:#b9cabe;border-color:var(--line)}.dark-mode td,.dark-mode .detail-section,.dark-mode .detail-badges{border-color:var(--line)}.dark-mode tr:hover{background:#243a2e}
 .dark-mode .status-pill{background:#2b3d32;color:#c7d8cd}.dark-mode .status-pill.under-review{background:#493c23;color:#f0d28c}.dark-mode .status-pill.in-progress{background:#233b50;color:#a8cbee}.dark-mode .status-pill.assigned{background:#39304d;color:#c9b9ee}.dark-mode .status-pill.resolved{background:#244733;color:#a9dfb8}
 .dark-mode .modal-backdrop{background:rgba(0,0,0,.76)}.dark-mode .modal{background:#192820;border-color:#405849}.dark-mode .toast{background:#214b38;color:#f2fff6}.dark-mode .app-footer{border-color:var(--line);color:#94a99d}.dark-mode .bar-track{background:#2a3c31}.dark-mode .method-row,.dark-mode .watch-row{border-color:var(--line)}.dark-mode .mobile-scrim{background:rgba(0,0,0,.72)}
+
+
+/* Dark mode global surface and page overrides */
+:root:has(.app-shell.dark-mode){color-scheme:dark;--ink:#e5eee9;--muted:#a0b2a8;--line:#30443a;--green:#9bd7b7;--green2:#80c6a0;--mint:#203b2e;--surface:#192820;--bg:#101a15;--coral:#f08b78;--shadow:0 8px 28px rgba(0,0,0,.24);background:#101a15;color:#e5eee9}
+:root:has(.app-shell.dark-mode) body{background:#101a15;color:#e5eee9}
+.app-shell.dark-mode{background:#101a15;color:#e5eee9}
+.dark-mode .main-area,.dark-mode .page-content{background:#101a15;color:#e5eee9}
+.dark-mode .sidebar,.dark-mode .topbar,.dark-mode .notification-popover,.dark-mode .priority-panel,.dark-mode .map-panel,.dark-mode .recent-panel,.dark-mode .category-panel,.dark-mode .methodology-panel,.dark-mode .recurring-panel,.dark-mode .full-table-panel,.dark-mode .modal,.dark-mode .stat-card,.dark-mode .mapped-card{background:#192820!important;color:#e5eee9;border-color:#30443a!important}
+.dark-mode .sidebar-tip,.dark-mode .workspace-switch,.dark-mode .impact-banner,.dark-mode .priority-row,.dark-mode .insight-card,.dark-mode .insight-recommendation,.dark-mode .table-wrap,.dark-mode .demo-note,.dark-mode .form-hint,.dark-mode .evidence-placeholder{background:#20352a!important;color:#d7e8dd;border-color:#30443a}
+.dark-mode .page-heading h1,.dark-mode .section-heading h2,.dark-mode .panel-header h3,.dark-mode .priority-row strong,.dark-mode .mapped-copy strong,.dark-mode .table-wrap td,.dark-mode .modal-header h2,.dark-mode .confirm-modal h2{color:#e5eee9}
+.dark-mode .nav-label,.dark-mode .workspace-label,.dark-mode .breadcrumb,.dark-mode .heading-sub,.dark-mode .section-heading p,.dark-mode .panel-subtitle,.dark-mode .app-footer,.dark-mode .detail-description{color:#a0b2a8}
+.dark-mode .nav-item{color:#a9bbb0}.dark-mode .nav-item.active{background:#254936;color:#b8e9ca}.dark-mode .nav-item:hover{background:#294336;color:#d7f1e1}
+.dark-mode .field input,.dark-mode .field select,.dark-mode .field textarea,.dark-mode .search-box,.dark-mode .filter-select-wrap,.dark-mode .filter-select-wrap select{background:#111e17!important;color:#e5eee9!important;border-color:#405849!important}
+.dark-mode .search-box input{background:transparent!important;color:#e5eee9!important}
+.dark-mode .button-secondary,.dark-mode .icon-button{background:#243a2e;color:#d5e9dc;border-color:#405849}
+.dark-mode .theme-toggle{color:#f4d68b}
+.dark-mode .modal-backdrop{background:rgba(0,0,0,.78)}
+.dark-mode .app-footer,.dark-mode .profile-row,.dark-mode .method-row,.dark-mode .watch-row{border-color:#30443a}
