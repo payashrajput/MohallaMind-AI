@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   Activity, AlertTriangle, ArrowDownRight, ArrowUpRight, Bell, Check, CheckCheck,
   ChevronDown, ChevronRight, CircleHelp, Clock3, FileCheck2, Filter, GitMerge,
-  Home, Languages, Layers3, ListFilter, MapPin, Menu, MessageSquareText, Plus,
+  Home, Languages, Layers3, ListFilter, MapPin, Menu, MessageSquareText, Moon, Sun, Plus,
   Search, Settings2, ShieldCheck, Sparkles, TrendingUp, Upload, Users, Waves,
   X, Zap, Camera, MapPinned, RotateCcw, ExternalLink, ClipboardCheck, LogIn, LogOut, UserRound
 } from 'lucide-react';
@@ -41,6 +41,8 @@ export default function App(){
   const [selected,setSelected]=useState(null);
   const [toast,setToast]=useState('');
   const [mobileNav,setMobileNav]=useState(false);
+  const [darkMode,setDarkMode]=useState(()=>{try{return localStorage.getItem('mohallamind_theme')==='dark';}catch{return false;}});
+  useEffect(()=>{try{localStorage.setItem('mohallamind_theme',darkMode?'dark':'light');}catch{}},[darkMode]);
   const [showNotifications,setShowNotifications]=useState(false);
   const [showHelp,setShowHelp]=useState(false);
   const [form,setForm]=useState({title:'',category:'Road damage',location:'',ward:'Ward 08',description:'',severity:'Medium'});
@@ -85,7 +87,7 @@ export default function App(){
   };
   const resetDemo=()=>{if(!import.meta.env.DEV){setToast('Demo reset is disabled outside development.');return;}setReports(seedReports);localStorage.removeItem(STORAGE_KEY);setToast('Local sample data restored.');setShowReset(false);setActive('overview');};
 
-  return <div className="app-shell">
+  return <div className={'app-shell '+(darkMode?'dark-mode':'')}>
     <aside className={`sidebar ${mobileNav?'mobile-open':''}`}>
       <div className="brand"><div className="brand-mark"><Waves size={23}/><span /></div><div><div className="brand-name">mohalla<span>mind</span></div><div className="brand-sub">CIVIC INTELLIGENCE</div></div><button className="mobile-close icon-button" onClick={()=>setMobileNav(false)}><X size={18}/></button></div>
       <div className="workspace-label">WORKSPACE</div>
@@ -101,7 +103,7 @@ export default function App(){
     </aside>
     {mobileNav&&<button className="mobile-scrim" onClick={()=>setMobileNav(false)} aria-label="Close navigation"/>}
     <main className="main-area">
-      <header className="topbar"><div className="topbar-left"><button className="mobile-menu icon-button" onClick={()=>setMobileNav(true)}><Menu size={20}/></button><div className="breadcrumb">Workspace <ChevronRight size={14}/> <strong>{navItems.find(n=>n.id===active)?.label||'Overview'}</strong></div></div><div className="topbar-actions"><div className="system-status"><span className="pulse-dot"/> {apiStatus==='connected'?'API connected':apiStatus==='connecting'?'Connecting to API':'API unavailable'}</div><button className="icon-button notification-button" onClick={()=>setShowNotifications(v=>!v)} aria-label="Notifications"><Bell size={18}/><i/></button>{authUser?<button className="button button-secondary auth-action" onClick={signOut}><LogOut size={15}/> {authUser.fullName.split(' ')[0]} · Sign out</button>:<button className="button button-secondary auth-action" onClick={()=>{setAuthMode('login');setShowAuth(true);}}><LogIn size={15}/> Sign in</button>}</div>{showNotifications&&<div className="notification-popover"><strong>Notifications</strong><p><span className="notification-dot"/> {critical?`${critical} critical issue${critical>1?'s':''} need review.`:'No critical issues currently.'}</p><p><span className="notification-dot blue-dot"/> {openReports.length} open incidents in this demo workspace.</p><button onClick={()=>{setShowNotifications(false);setActive('incidents')}}>Open incident desk <ChevronRight size={14}/></button></div>}</header>
+      <header className="topbar"><div className="topbar-left"><button className="mobile-menu icon-button" onClick={()=>setMobileNav(true)}><Menu size={20}/></button><div className="breadcrumb">Workspace <ChevronRight size={14}/> <strong>{navItems.find(n=>n.id===active)?.label||'Overview'}</strong></div></div><div className="topbar-actions"><div className="system-status"><span className="pulse-dot"/> {apiStatus==='connected'?'API connected':apiStatus==='connecting'?'Connecting to API':'API unavailable'}</div><button className="icon-button theme-toggle" onClick={()=>setDarkMode(v=>!v)} aria-label={darkMode?'Switch to light mode':'Switch to dark mode'} title={darkMode?'Switch to light mode':'Switch to dark mode'}>{darkMode?<Sun size={18}/>:<Moon size={18}/>}</button><button className="icon-button notification-button" onClick={()=>setShowNotifications(v=>!v)} aria-label="Notifications"><Bell size={18}/><i/></button>{authUser?<button className="button button-secondary auth-action" onClick={signOut}><LogOut size={15}/> {authUser.fullName.split(' ')[0]} · Sign out</button>:<button className="button button-secondary auth-action" onClick={()=>{setAuthMode('login');setShowAuth(true);}}><LogIn size={15}/> Sign in</button>}</div>{showNotifications&&<div className="notification-popover"><strong>Notifications</strong><p><span className="notification-dot"/> {critical?`${critical} critical issue${critical>1?'s':''} need review.`:'No critical issues currently.'}</p><p><span className="notification-dot blue-dot"/> {openReports.length} open incidents in this demo workspace.</p><button onClick={()=>{setShowNotifications(false);setActive('incidents')}}>Open incident desk <ChevronRight size={14}/></button></div>}</header>
       <div className="page-content">
         {active==='overview'&&<>
           <div className="page-heading"><div><div className="eyebrow"><span className="eyebrow-line"/> COMMUNITY OPERATIONS <span className="date-label">/ {new Date().toLocaleDateString('en-IN',{weekday:'long',day:'2-digit',month:'long'}).toUpperCase()}</span></div><h1>Good afternoon, {authUser?.fullName?.split(' ')[0]||'Neighbour'} <span className="wave-emoji">✳</span></h1><p className="heading-sub">Here’s what’s happening across your community today.</p></div><div className="heading-actions"><button className="button button-secondary" onClick={()=>setShowHelp(true)}><CircleHelp size={16}/> How it works</button><button className="button button-primary" onClick={()=>setShowReport(true)}><Plus size={17}/> Report an issue</button></div></div>
